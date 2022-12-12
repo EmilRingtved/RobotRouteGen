@@ -1,6 +1,5 @@
 # This code converts an SVG path to a series of coordinates
 # It is intended as tool for generating a driving path for a diff drive robot
-# 
 
 from svg.path import parse_path
 from xml.dom import minidom
