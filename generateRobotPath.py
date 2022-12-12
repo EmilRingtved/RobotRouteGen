@@ -1,19 +1,27 @@
+# This code converts an SVG path to a series of coordinates
+# It is intended as tool for generating a driving path for a diff drive robot
+# 
+
 from svg.path import parse_path
 from xml.dom import minidom
 from matplotlib import pyplot as plt
 import numpy as np
 
+# Parse an SVG path and return the coordinates of a point
+# at a given distance along the path
 def get_point_at(path, distance, scale, offset):
     pos = path.point(distance)
     pos += offset
     pos *= scale
     return pos.real, pos.imag
 
-
+# Generate a sequence of points along an SVG path
+# with a given density and scale
 def points_from_path(path, density, scale, offset):
     step = int(path.length() * density)
     last_step = step - 1
 
+    # Handle the case where the path is only one point long,
     if last_step == 0:
         yield get_point_at(path, 0, scale, offset)
         return
@@ -21,7 +29,8 @@ def points_from_path(path, density, scale, offset):
     for distance in range(step):
         yield get_point_at(path, distance / last_step, scale, offset)
 
-
+# Generate a sequence of points from an SVG document
+# with a given density and scale
 def points_from_doc(doc, density=5, scale=1, offset=0):
     offset = offset[0] + offset[1] * 1j
     points = []
@@ -31,6 +40,8 @@ def points_from_doc(doc, density=5, scale=1, offset=0):
 
     return points
 
+# Convert an SVG path to a sequence of coordinates
+# and return them as numpy arrays
 def svg_to_cords(svg_path):
 
     y_coords = np.empty(0,float)
