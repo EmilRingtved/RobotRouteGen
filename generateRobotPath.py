@@ -3,7 +3,6 @@
 
 from svg.path import parse_path
 from xml.dom import minidom
-from bs4 import BeautifulSoup
 from matplotlib import pyplot as plt
 import numpy as np
 
@@ -35,33 +34,46 @@ def points_from_doc(doc, density=5, scale=1, offset=0):
     offset = offset[0] + offset[1] * 1j
     route_points = []
     stop_points = []
+    orientation_vectors = []
     # Searches the svg file for paths to generate waypoints from
     for element in doc.getElementsByTagName("path"):
         for path in parse_path(element.getAttribute("d")):
             route_points.extend(points_from_path(path, density, scale, offset))
     
-    #searches for stop points in the svg file and appends them to the list of stop points
+    # Searches for stop points in the svg file 
     for circle in doc.getElementsByTagName("circle"):
-        x = circle.getAttribute('cx')
-        y = circle.getAttribute('cy')
-        stop_point = np.array([x,y])
-        stop_points = np.append(stop_points,stop_point)
+        cx = circle.getAttribute('cx')
+        cy = circle.getAttribute('cy')
 
-    return route_points, stop_points
+    # Serches for orientation and stop point lines in the svg file and appends to the orientation_vector list
+    # The start of the line will mark the stop point, and the end point will function as a turning point for the robot to orient
+    # itself towards.
+    # Every time the robot is haltet it it will check if a new orientation is given before driving. 
+    for lines in doc.getElementsByTagName("line"):
+        x1 = lines.getAttribute('x1')
+        y1 = lines.getAttribute('y1')
+        x2 = lines.getAttribute('x2')
+        y2 = lines.getAttribute('y2')
+        orientation_vector = (int(x2),int(y2))
+        stop_point = (int(x1),int(y1))
+        orientation_vectors.append(orientation_vector)
+        stop_points.append(stop_point)
+    return route_points, stop_points, orientation_vectors
 
 # Convert an SVG path to a sequence of coordinates
 # and return them as numpy arrays
-def svg_to_cords(svg_path):
-
-    y_coords = np.empty(0,float)
-    x_coords = np.empty(0,float)
-
-    doc = minidom.parseString(svg_path)
-    # change density or scale to scale up system
-    points = points_from_doc(doc, density=1, scale=1, offset=(0,0))
-    for i in range(len(points)):
-        print([points[i][0],points[i][1]])
-        x_coords = np.append(x_coords, (points[i][0]))
-        y_coords = np.append(y_coords, (points[i][1]))
-
-    return x_coords, y_coords
+svg_file_path = "SvgTest/heart.svg"
+with open(svg_file_path, "r") as f:
+    # Read the contents of the file into a string variable
+    svg_path = f.read()
+doc = minidom.parseString(svg_path)
+route, stop, orientation = points_from_doc(doc,density=0.5, scale=1, offset=(0,0))
+# Plot options
+plt.figure()
+plt.scatter(*zip(*route),s=10,c='b', marker='x', label='way points')
+plt.scatter(*zip(*stop),s=10,c='r', marker='o', label='stop points')
+plt.scatter(*zip(*orientation),s=20,c='g',marker='+',label='orientation point')
+plt.legend(loc='upper left')
+plt.xlabel('x-axis')
+plt.ylabel('y-axis')
+plt.show()
