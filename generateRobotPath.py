@@ -35,15 +35,21 @@ def points_from_doc(doc, density=5, scale=1, offset=0):
     route_points = []
     stop_points = []
     orientation_vectors = []
+    colours = []
     # Searches the svg file for paths to generate waypoints from
     for element in doc.getElementsByTagName("path"):
+        # Append the colour of the path to seperate the paths for different robots
+        style = element.getAttribute('style')
+        # make sure the colors are given as basic strings in the svg file
+        # Find the marker for the start and stop part of the stroke section
+        start = style.find(':') + 1
+        stop = style.find(';')
+        # append the colorcode to the array
+        colour_code = style[start:stop]
+        colours.append(colour_code)
+
         for path in parse_path(element.getAttribute("d")):
             route_points.extend(points_from_path(path, density, scale, offset))
-    
-    # Searches for stop points in the svg file 
-    for circle in doc.getElementsByTagName("circle"):
-        cx = circle.getAttribute('cx')
-        cy = circle.getAttribute('cy')
 
     # Serches for orientation and stop point lines in the svg file and appends to the orientation_vector list
     # The start of the line will mark the stop point, and the end point will function as a turning point for the robot to orient
@@ -58,7 +64,7 @@ def points_from_doc(doc, density=5, scale=1, offset=0):
         stop_point = (int(x1),int(y1))
         orientation_vectors.append(orientation_vector)
         stop_points.append(stop_point)
-    return route_points, stop_points, orientation_vectors
+    return route_points, stop_points, orientation_vectors, colours
 
 # Convert an SVG path to a sequence of coordinates
 # and return them as numpy arrays
@@ -67,9 +73,10 @@ with open(svg_file_path, "r") as f:
     # Read the contents of the file into a string variable
     svg_path = f.read()
 doc = minidom.parseString(svg_path)
-route, stop, orientation = points_from_doc(doc,density=0.5, scale=1, offset=(0,0))
+route, stop, orientation, colours= points_from_doc(doc,density=0.5, scale=1, offset=(0,0))
 # Plot options
 plt.figure()
+print('stroke %s' % colours)
 plt.scatter(*zip(*route),s=10,c='b', marker='x', label='way points')
 plt.scatter(*zip(*stop),s=10,c='r', marker='o', label='stop points')
 plt.scatter(*zip(*orientation),s=20,c='g',marker='+',label='orientation point')
