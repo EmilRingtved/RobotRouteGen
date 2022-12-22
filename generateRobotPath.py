@@ -4,7 +4,6 @@
 from svg.path import parse_path
 from xml.dom import minidom
 from matplotlib import pyplot as plt
-import numpy as np
 
 # Parse an SVG path and return the coordinates of a point
 # at a given distance along the path
@@ -68,19 +67,20 @@ def points_from_doc(doc, density=5, scale=1, offset=0):
 
 # Convert an SVG path to a sequence of coordinates
 # and return them as numpy arrays
-svg_file_path = "SvgTest/heart.svg"
-with open(svg_file_path, "r") as f:
-    # Read the contents of the file into a string variable
-    svg_path = f.read()
-doc = minidom.parseString(svg_path)
-route, stop, orientation, colours= points_from_doc(doc,density=0.5, scale=1, offset=(0,0))
-# Plot options
-plt.figure()
-print('stroke %s' % colours)
-plt.scatter(*zip(*route),s=10,c='b', marker='x', label='way points')
-plt.scatter(*zip(*stop),s=10,c='r', marker='o', label='stop points')
-plt.scatter(*zip(*orientation),s=20,c='g',marker='+',label='orientation point')
-plt.legend(loc='upper left')
-plt.xlabel('x-axis')
-plt.ylabel('y-axis')
-plt.show()
+def print_test(test_svg):
+    svg_file_path = test_svg
+    with open(svg_file_path, "r") as f:
+        # Read the contents of the file into a string variable
+        svg_path = f.read()
+    doc = minidom.parseString(svg_path)
+    route, stop, orientation, colours= points_from_doc(doc,density=0.5, scale=1, offset=(0,0))
+    # Plot options
+    plt.figure()
+    print('stroke %s' % colours)
+    plt.scatter(*zip(*route),s=10,c='b', marker='x', label='way points')
+    plt.scatter(*zip(*stop),s=10,c='r', marker='o', label='stop points')
+    plt.scatter(*zip(*orientation),s=20,c='g',marker='+',label='orientation point')
+    plt.legend(loc='upper left')
+    plt.xlabel('x-axis')
+    plt.ylabel('y-axis')
+    plt.show()
