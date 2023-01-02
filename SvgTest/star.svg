@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="512px"
+   height="512px"
+   viewBox="0 0 512 512"
+   id="svg113"
+   sodipodi:docname="star.svg"
+   inkscape:version="1.2.2 (b0a84865, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs117" />
+  <sodipodi:namedview
+     id="namedview115"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.80604092"
+     inkscape:cx="335.5909"
+     inkscape:cy="295.89069"
+     inkscape:window-width="1512"
+     inkscape:window-height="945"
+     inkscape:window-x="0"
+     inkscape:window-y="37"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg113" />
+  <path
+     stroke="red"
+     d="M 261.38548,467.31001 332.43948,323.333 491.32952,300.245 376.35448,188.172 403.49948,29.942004 261.38548,104.64 119.27349,29.942004 146.41949,188.172 31.443496,300.245 190.33448,323.333 Z"
+     id="path109"
+     style="fill:none" />
+  <path
+     stroke="blue"
+     d="M 259.216,29.942 330.27,173.919 489.16,197.007 374.185,309.08 401.33,467.31 259.216,392.612 117.104,467.31 144.25,309.08 29.274,197.007 188.165,173.919 z"
+     id="path111"
+     style="fill:none;fill-opacity:1" />
+  <path
+     stroke="green"
+     d="m 42.583845,248.14193 143.977015,71.054 23.088,158.89003 112.073,-114.97503 158.22999,27.145 -74.698,-142.114 74.698,-142.11199 -158.22999,27.146 -112.073,-114.976007 -23.088,158.890997 z"
+     id="path109-7"
+     style="fill:none" />
+  <path
+     stroke="yellow"
+     d="M 479.2167,248.01943 335.2397,176.96544 312.15169,18.075388 200.0787,133.05042 41.848685,105.90545 116.54669,248.01943 41.848675,390.13143 200.0787,362.98544 l 112.07299,114.976 23.08802,-158.891 z"
+     id="path109-7-9"
+     style="fill:none"
+     inkscape:transform-center-x="0.10795"
+     inkscape:transform-center-y="17.36884" />
+</svg>

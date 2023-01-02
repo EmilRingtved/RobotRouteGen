@@ -1,55 +1,56 @@
 # This code converts an SVG path to a series of coordinates
 # It is intended as tool for generating a driving path for a diff drive robot
-
+import numpy as np
 from svg.path import parse_path
 from xml.dom import minidom
 from matplotlib import pyplot as plt
+color_dict = { 'red' : 1, 'blue' : 2, 'yellow' : 3, 'green' : 4, 'orange' : 5, 'indigo' : 6, 'teal' : 7, 'steelblue' : 8}
 
 # Parse an SVG path and return the coordinates of a point
 # at a given distance along the path
-def get_point_at(path, distance, scale, offset):
+def getPoint(path, distance, scale):
+    # Get the position of the point on the path at the specified distance
     pos = path.point(distance)
-    pos += offset
+    # Scale the position by the specified factor
     pos *= scale
+     # Return the scaled position as a tuple of its real and imaginary parts
     return pos.real, pos.imag
 
 # Generate a sequence of points along an SVG path
 # with a given density and scale
-def points_from_path(path, density, scale, offset):
+def pointsFromPath(path, density, scale):
     step = int(path.length() * density)
     last_step = step - 1
 
-    # Handle the case where the path is only one point long,
+    # Handle the special case where the length of the path is 1.
     if last_step == 0:
-        yield get_point_at(path, 0, scale, offset)
+        yield getPoint(path, 0, scale)
         return
 
     for distance in range(step):
-        yield get_point_at(path, distance / last_step, scale, offset)
+        yield getPoint(path, distance / last_step, scale)
 
 # Generate a sequence of points from an SVG document
 # with a given density and scale
-def points_from_doc(doc, density=5, scale=1, offset=0):
-    offset = offset[0] + offset[1] * 1j
+def pointsFromDoc(doc, density=5, scale=1):
     route_points = []
     stop_points = []
     orientation_vectors = []
-    colours = []
+    point_matrix = [0,0,0,0,0,0,0,0]
     # Searches the svg file for paths to generate waypoints from
     for element in doc.getElementsByTagName("path"):
         # Append the colour of the path to seperate the paths for different robots
-        style = element.getAttribute('style')
+        style = element.getAttribute("stroke")
+        print(style)
         # make sure the colors are given as basic strings in the svg file
         # Find the marker for the start and stop part of the stroke section
-        start = style.find(':') + 1
-        stop = style.find(';')
-        # append the colorcode to the array
-        colour_code = style[start:stop]
-        colours.append(colour_code)
-
+        colour_code = style
         for path in parse_path(element.getAttribute("d")):
-            route_points.extend(points_from_path(path, density, scale, offset))
+            route_points.extend(pointsFromPath(path, density, scale))
 
+        if colour_code != {colour_code}:
+            point_matrix.insert(point_matrix[color_dict[colour_code]], route_points)
+        print(point_matrix)
     # Serches for orientation and stop point lines in the svg file and appends to the orientation_vector list
     # The start of the line will mark the stop point, and the end point will function as a turning point for the robot to orient
     # itself towards.
@@ -63,7 +64,7 @@ def points_from_doc(doc, density=5, scale=1, offset=0):
         stop_point = (int(x1),int(y1))
         orientation_vectors.append(orientation_vector)
         stop_points.append(stop_point)
-    return route_points, stop_points, orientation_vectors, colours
+    return point_matrix, stop_points, orientation_vectors
 
 # Convert an SVG path to a sequence of coordinates
 # and return them as numpy arrays
@@ -73,14 +74,19 @@ def print_test(test_svg):
         # Read the contents of the file into a string variable
         svg_path = f.read()
     doc = minidom.parseString(svg_path)
-    route, stop, orientation, colours= points_from_doc(doc,density=0.5, scale=1, offset=(0,0))
+    route, stop, orientation= pointsFromDoc(doc,density=0.1, scale=1)
+    print(route[0])
     # Plot options
     plt.figure()
-    print('stroke %s' % colours)
-    plt.scatter(*zip(*route),s=10,c='b', marker='x', label='way points')
-    plt.scatter(*zip(*stop),s=10,c='r', marker='o', label='stop points')
-    plt.scatter(*zip(*orientation),s=20,c='g',marker='+',label='orientation point')
+    # print('stroke %s' % route[])
+    for i in range(0,len(route)):
+        if route[i] != 0:
+            plt.scatter(*zip(*route[i]),s=10,c='b', marker='x', label='way points ' + str(i+1))
+    if stop != [] and orientation != []:
+        plt.scatter(*zip(*stop),s=10,c='r', marker='o', label='stop points')
+        plt.scatter(*zip(*orientation),s=20,c='g',marker='+',label='orientation point')
     plt.legend(loc='upper left')
     plt.xlabel('x-axis')
     plt.ylabel('y-axis')
     plt.show()
+print_test("SvgTest/star.svg")
