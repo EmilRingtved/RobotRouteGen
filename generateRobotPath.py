@@ -46,7 +46,6 @@ def pointsFromDoc(doc, density=5, scale=1):
         # make sure the colors are given as basic strings in the svg file
         # Find the marker for the start and stop part of the stroke section
         colour_code = style
-        print(style)
         for path in parse_path(element.getAttribute("d")):
             if colour_code in color_dict:
                 path_arr[color_dict[colour_code]].extend(pointsFromPath(path, density, scale))
@@ -89,4 +88,4 @@ def print_test(test_svg):
     plt.xlabel('x-axis')
     plt.ylabel('y-axis')
     plt.show()
-print_test("RobotRouteGen/SvgTest/star.svg")
+#print_test("RobotRouteGen/SvgTest/star.svg")
