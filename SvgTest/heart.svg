@@ -3,8 +3,8 @@
 
 <svg
    version="1.1"
-   width="130"
-   height="130"
+   width="400"
+   height="400"
    id="svg2"
    sodipodi:docname="heart.svg"
    inkscape:version="1.2.2 (b0a84865, 2022-12-01)"
@@ -25,13 +25,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="1.8153846"
-     inkscape:cx="-20.932204"
-     inkscape:cy="65.000001"
-     inkscape:window-width="1309"
-     inkscape:window-height="456"
+     inkscape:zoom="1.2859823"
+     inkscape:cx="167.57618"
+     inkscape:cy="248.4482"
+     inkscape:window-width="1512"
+     inkscape:window-height="945"
      inkscape:window-x="0"
-     inkscape:window-y="38"
+     inkscape:window-y="37"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2" />
   <metadata
@@ -42,22 +42,21 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
      id="defs8" />
   <path
-     stroke="red"
-     d="m 65,101.37931 c -6,10 -16,17 -28,17 -17,0 -30,-13 -30,-29.999999 0,-33 18,-38 58,-76 40,38 58,43 58,76 0,16.999999 -13,29.999999 -30,29.999999 -12,0 -22,-7 -28,-17 z"
+     stroke="#ff0000"
+     d="m 199.91632,333.26113 c -20.25741,36.79373 -54.01976,62.54932 -94.53458,62.54932 C 47.985743,395.81045 4.0946896,347.97862 4.0946896,285.42931 4.0946896,164.01007 64.866918,145.61322 199.91632,5.7971241 334.96572,145.61322 395.73795,164.01007 395.73795,285.42931 c 0,62.54931 -43.89106,110.38114 -101.28705,110.38114 -40.51482,0 -74.27717,-25.75559 -94.53458,-62.54932 z"
      id="path4"
-     style="fill:none;fill-opacity:1;stroke:#ff0000;stroke-width:2" />
+     style="fill:none;fill-opacity:1;stroke:#ff0000;stroke-width:7.04909" />
   <line
-     x1="65"
-     y1="101"
-     x2="80"
-     y2="100"
-     style="stroke:#0000ff;stroke-width:2"
+     x1="199.91632"
+     y1="331.86551"
+     x2="250.55986"
+     y2="328.18616"
+     style="stroke:#0000ff;stroke-width:7.04909"
      id="line11" />
 </svg>
